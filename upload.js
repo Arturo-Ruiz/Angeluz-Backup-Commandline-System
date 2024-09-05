@@ -1,17 +1,12 @@
-const { google } = require("googleapis");
-
 const fs = require("fs");
 
 const { PassThrough } = require("stream");
 
 const mime = require("mime-types");
 
-const auth = new google.auth.GoogleAuth({
-  keyFile: process.env.GOOGLE_APPLICATION_CREDENTIALS,
-  scopes: ["https://www.googleapis.com/auth/drive"],
-});
+const drive = require("./googleDrive");
 
-const drive = google.drive({ version: "v3", auth });
+const { deleteFilesInFolder } = require('./deleteAllFilesInFolder'); 
 
 async function uploadFile(filePath, fileName, folderId) {
   try {
@@ -34,6 +29,8 @@ async function uploadFile(filePath, fileName, folderId) {
     const passThroughStream = new PassThrough();
 
     fileStream.pipe(passThroughStream);
+
+    deleteFilesInFolder(folderId); 
 
     const response = await drive.files.create({
       resource: fileMetadata,
@@ -80,4 +77,4 @@ function formatBytes(bytes) {
 
 // Example
 
-uploadFile("./test.msi", "test.msi", "FoldernID");
+uploadFile("./test.msi", "test.msi", "1SVEvXyXfTafx4blQ0Ys1gEiXhXykgMbW");
