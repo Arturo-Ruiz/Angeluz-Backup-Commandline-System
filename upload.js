@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 const fs = require("fs");
 
 const { PassThrough } = require("stream");
@@ -6,7 +8,13 @@ const mime = require("mime-types");
 
 const drive = require("./googleDrive");
 
-const { deleteFilesInFolder } = require('./deleteAllFilesInFolder'); 
+const jsonData = require("./files.json");
+
+const { deleteFilesInFolder } = require("./deleteAllFilesInFolder");
+
+const folderId = process.env.FOLDER_ID;
+
+deleteFilesInFolder(folderId);
 
 async function uploadFile(filePath, fileName, folderId) {
   try {
@@ -16,8 +24,6 @@ async function uploadFile(filePath, fileName, folderId) {
     };
 
     const mimeType = mime.lookup(filePath) || "application/octet-stream";
-
-    console.log("mimeType:", mimeType);
 
     const media = {
       mimeType: mimeType,
@@ -29,8 +35,6 @@ async function uploadFile(filePath, fileName, folderId) {
     const passThroughStream = new PassThrough();
 
     fileStream.pipe(passThroughStream);
-
-    deleteFilesInFolder(folderId); 
 
     const response = await drive.files.create({
       resource: fileMetadata,
@@ -75,6 +79,21 @@ function formatBytes(bytes) {
   return `${bytes.toFixed(2)} ${units[i]}`;
 }
 
-// Example
 
-uploadFile("./test.msi", "test.msi", "1SVEvXyXfTafx4blQ0Ys1gEiXhXykgMbW");
+async function uploadFilesFromJSON(jsonData, folderId) {
+  try {
+    for (const fileData of jsonData) {
+      const { filePath, fileName } = fileData;
+
+      await uploadFile(filePath, fileName, folderId);
+
+      console.log("Subiendo archivo:", fileName, folderId, filePath);
+    }
+
+    console.log("Todos los archivos han sido subidos.");
+  } catch (err) {
+    console.error("Error al subir archivos desde JSON:", err);
+  }
+}
+
+uploadFilesFromJSON(jsonData, folderId);
