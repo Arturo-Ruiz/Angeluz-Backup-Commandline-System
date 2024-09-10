@@ -1,6 +1,6 @@
 require("dotenv").config();
 
-const jsonData = require("./upload.json");
+const jsonData = require("./data/upload.json");
 
 const { deleteFileByNameInFolder } = require("./deleteFileByNameInFolder");
 

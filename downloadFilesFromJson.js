@@ -4,7 +4,7 @@ const { getFileIdByName } = require("./getFileIdByName");
 
 const { downloadFile } = require("./downloadFile");
 
-const jsonData = require("./download.json");
+const jsonData = require("./data/download.json");
 
 const folderId = process.env.FOLDER_ID;
 
