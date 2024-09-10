@@ -1,9 +1,10 @@
 require("dotenv").config();
 
-const { deleteFileByNameInFolder } = require("../drive-utils/deleteFileByNameInFolder");
+const {
+  deleteFileByNameInFolder,
+} = require("../drive-utils/deleteFileByNameInFolder");
 
 const { uploadFile } = require("../drive-utils/uploadFile");
-
 
 /**
  * Uploads multiple files from a JSON array.
@@ -33,5 +34,4 @@ async function uploadFilesFromJSON(jsonData, folderId) {
   }
 }
 
-// uploadFilesFromJson(jsonData, folderId);
 module.exports = { uploadFilesFromJSON };
