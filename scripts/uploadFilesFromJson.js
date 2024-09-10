@@ -1,19 +1,16 @@
 require("dotenv").config();
 
-const jsonData = require("./data/upload.json");
+const { deleteFileByNameInFolder } = require("../drive-utils/deleteFileByNameInFolder");
 
-const { deleteFileByNameInFolder } = require("./drive-utils/deleteFileByNameInFolder");
+const { uploadFile } = require("../drive-utils/uploadFile");
 
-const { uploadFile } = require("./drive-utils/uploadFile");
-
-const folderId = process.env.FOLDER_ID;
 
 /**
  * Uploads multiple files from a JSON array.
  * @param {Array} jsonData - The JSON array containing file data.
  * @param {string} folderId - The ID of the folder to upload the files to.
  */
-async function uploadFilesFromJson(jsonData, folderId) {
+async function uploadFilesFromJSON(jsonData, folderId) {
   try {
     // Iterate over each file data in the JSON array
     for (const fileData of jsonData) {
@@ -36,4 +33,5 @@ async function uploadFilesFromJson(jsonData, folderId) {
   }
 }
 
-uploadFilesFromJson(jsonData, folderId);
+// uploadFilesFromJson(jsonData, folderId);
+module.exports = { uploadFilesFromJSON };

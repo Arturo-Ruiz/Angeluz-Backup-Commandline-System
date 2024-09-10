@@ -1,12 +1,8 @@
 require("dotenv").config();
 
-const { getFileIdByName } = require("./drive-utils/getFileIdByName");
+const { getFileIdByName } = require("../drive-utils/getFileIdByName");
 
-const { downloadFile } = require("./drive-utils/downloadFile");
-
-const jsonData = require("./data/download.json");
-
-const folderId = process.env.FOLDER_ID;
+const { downloadFile } = require("../drive-utils/downloadFile");
 
 async function downloadFilesFromJSON(jsonData, folderId) {
   try {
@@ -27,4 +23,4 @@ async function downloadFilesFromJSON(jsonData, folderId) {
   }
 }
 
-downloadFilesFromJSON(jsonData, folderId);
+module.exports = { downloadFilesFromJSON };
