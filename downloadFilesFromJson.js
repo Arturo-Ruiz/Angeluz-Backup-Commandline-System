@@ -1,8 +1,8 @@
 require("dotenv").config();
 
-const { getFileIdByName } = require("./getFileIdByName");
+const { getFileIdByName } = require("./modules/getFileIdByName");
 
-const { downloadFile } = require("./downloadFile");
+const { downloadFile } = require("./modules/downloadFile");
 
 const jsonData = require("./data/download.json");
 

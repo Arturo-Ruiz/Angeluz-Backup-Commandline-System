@@ -1,4 +1,4 @@
-const drive = require("./googleDrive");
+const drive = require("./modules/googleDrive");
 
 //Verify connect to google drive
 async function verifyConnection() {
