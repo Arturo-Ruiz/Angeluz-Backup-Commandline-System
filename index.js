@@ -13,23 +13,29 @@ const rl = readline.createInterface({
 });
 
 function showMenu() {
-  console.clear(); // Limpia la consola para una mejor presentación
-  console.log("¡Bienvenido!");
+  console.clear();
+  console.log("\x1b[32m¡Bienvenido!\x1b[0m");
   console.log("Por favor, selecciona una opción:");
+  if (selectedOption === 0) {
+    console.log("\x1b[34m> ↑ Subir archivos\x1b[0m");
+    console.log("  ↓ Descargar archivos");
+  } else {
+    console.log("  ↑ Subir archivos");
+    console.log("\x1b[34m> ↓ Descargar archivos\x1b[0m");
+  }
 }
 
-let selectedOption = 0; // Variable para rastrear la opción seleccionada
+let selectedOption = 0;
 
 showMenu();
 
 rl.input.on("keypress", (str, key) => {
-  if (key.name === "up") {
-    selectedOption = 0;
-  } else if (key.name === "down") {
-    selectedOption = 1;
+  if (key.name === "up" && selectedOption > 0) {
+    selectedOption--;
+  } else if (key.name === "down" && selectedOption < 1) {
+    selectedOption++;
   } else if (key.name === "return") {
-    // Enter presionado
-    rl.close(); // Cerramos la interfaz de lectura
+    rl.close();
     if (selectedOption === 0) {
       uploadFilesFromJSON(jsonDataUpload, folderId);
     } else if (selectedOption === 1) {
@@ -37,12 +43,5 @@ rl.input.on("keypress", (str, key) => {
     }
   }
 
-  showMenu(); // Volvemos a mostrar el menú con la opción seleccionada resaltada
-  if (selectedOption === 0) {
-    console.log("> ↑ Subir archivos");
-    console.log("  ↓ Descargar archivos");
-  } else {
-    console.log("  ↑ Subir archivos");
-    console.log("> ↓ Descargar archivos");
-  }
+  showMenu();
 });
