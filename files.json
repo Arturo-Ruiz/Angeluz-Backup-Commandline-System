@@ -1,14 +1,18 @@
 [
   {
-    "filePath": "",
-    "fileName": ""
+    "filePath": "./files_to_upload/interstellar_1.jpg",
+    "fileName": "interstellar_1.jpg"
   },
   {
-    "filePath": "",
-    "fileName": ""
+    "filePath": "./files_to_upload/interstellar_2.jpg",
+    "fileName": "interstellar_2.jpg"
   },
   {
-    "filePath": "",
-    "fileName": ""
+    "filePath": "./files_to_upload/interstellar_3.jpg",
+    "fileName": "interstellar_3.jpg"
+  },
+  {
+    "filePath": "./files_to_upload/interstellar_4.jpg",
+    "fileName": "interstellar_4.jpg"
   }
 ]
