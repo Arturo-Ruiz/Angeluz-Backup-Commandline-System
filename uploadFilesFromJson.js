@@ -2,9 +2,9 @@ require("dotenv").config();
 
 const jsonData = require("./data/upload.json");
 
-const { deleteFileByNameInFolder } = require("./modules/deleteFileByNameInFolder");
+const { deleteFileByNameInFolder } = require("./drive-utils/deleteFileByNameInFolder");
 
-const { uploadFile } = require("./modules/uploadFile");
+const { uploadFile } = require("./drive-utils/uploadFile");
 
 const folderId = process.env.FOLDER_ID;
 

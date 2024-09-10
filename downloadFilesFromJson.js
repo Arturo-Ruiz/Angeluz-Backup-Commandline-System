@@ -1,8 +1,8 @@
 require("dotenv").config();
 
-const { getFileIdByName } = require("./modules/getFileIdByName");
+const { getFileIdByName } = require("./drive-utils/getFileIdByName");
 
-const { downloadFile } = require("./modules/downloadFile");
+const { downloadFile } = require("./drive-utils/downloadFile");
 
 const jsonData = require("./data/download.json");
 
