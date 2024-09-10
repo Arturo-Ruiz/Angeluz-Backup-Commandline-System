@@ -1,7 +1,17 @@
 const drive = require("./googleDrive");
 
-async function deleteFileByName(folderId, fileName) {
+/**
+ * Deletes files with a specific name in a given folder.
+ *
+ * @param {string} folderId - The ID of the folder.
+ * @param {string} fileName - The name of the file to be deleted.
+ * @returns {Promise<void>} - A promise that resolves when the files are deleted.
+ * @throws {Error} - If there is an error deleting the file.
+ */
+
+async function deleteFileByNameInFolder(folderId, fileName) {
   try {
+    // List files in the folder with the specified name and not trashed
     let response = await drive.files.list({
       q: `'${folderId}' in parents and name = '${fileName}' and trashed = false`,
       fields: "nextPageToken, files(id)",
@@ -9,7 +19,7 @@ async function deleteFileByName(folderId, fileName) {
 
     const files = response.data.files;
 
-    // Manejar paginación en caso de que haya muchos archivos
+    // Retrieve all files using pagination
     while (response.data.nextPageToken) {
       response = await drive.files.list({
         q: `'${folderId}' in parents and name = '${fileName}' and trashed = false`,
@@ -19,21 +29,19 @@ async function deleteFileByName(folderId, fileName) {
       files.push(...response.data.files);
     }
 
+    // Check if any files were found
     if (files.length === 0) {
-      console.log(
-        `No se encontró ningún archivo con el nombre '${fileName}' en la carpeta.`
-      );
+      console.log(`No file found with the name '${fileName}' in the folder.`);
     } else {
+      // Delete each file found
       for (const file of files) {
         await drive.files.delete({ fileId: file.id });
-        console.log(
-          `Archivo con ID ${file.id} y nombre '${fileName}' eliminado.`
-        );
+        console.log(`File with ID ${file.id} and name '${fileName}' deleted.`);
       }
     }
   } catch (err) {
-    console.error("Error al eliminar el archivo:", err);
+    console.error("Error deleting the file:", err);
   }
 }
 
-module.exports = { deleteFileByName };
+module.exports = { deleteFileByNameInFolder };
